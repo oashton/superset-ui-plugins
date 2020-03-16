@@ -64,24 +64,24 @@ class LineMulti extends React.Component {
     this.state = { queryData: false };
   }
 
+  static getDerivedStateFromProps(props, state) {
+    if (props.rawFormData !== state.prevRawFormData) {
+      return {
+        queryData: false,
+        prevRawFormData: props.rawFormData,
+      };
+    }
+    return null;
+  }
+
   componentDidMount() {
     this.loadData(this.props);
   }
 
-  shouldComponentUpdate(nextProps) {
-    const { rawFormData } = this.props;
-    const { rawFormData: nextRawFormData } = nextProps;
-    const { queryData } = this.state;
-    if (!queryData || !isEqual(rawFormData, nextRawFormData) ||
-      ((this.props.height != nextProps.height) || (this.props.width != nextProps.width))) {
-      return true;
-    }
-
-    return false;
-  }
-
   componentDidUpdate() {
-    this.loadData(this.props);
+    if ( this.state.queryData === false ) {
+      this.loadData(this.props);
+    }
   }
 
   loadData(props) {
