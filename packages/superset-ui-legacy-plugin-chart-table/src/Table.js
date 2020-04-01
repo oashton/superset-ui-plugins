@@ -222,7 +222,10 @@ function TableVis(element, props) {
           d3.select(this).classed('filtered', false);
         } else {
           d3.select(this).classed('filtered', true);
-          onAddFilter(d.col, [d.val]);
+          const selectedValues = {
+            [d.col]: [d.val],
+          };
+          onAddFilter(selectedValues, false);
         }
       }
     })
