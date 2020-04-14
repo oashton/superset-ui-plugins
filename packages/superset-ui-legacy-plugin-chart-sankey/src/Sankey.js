@@ -107,16 +107,15 @@ function Sankey(element, props) {
       html = [
         "<div class=''>Path Value: <span class='emph'>",
         val,
-        '</span></div>',
-        "<div class='percents'>",
+        "</span>; ",
         "<span class='emph'>",
         Number.isFinite(sourcePercent) ? sourcePercent : '100',
         '%</span> of ',
         d.source.name,
-        '<br/>',
+        "; ",
         `<span class='emph'>${Number.isFinite(targetPercent) ? targetPercent : '--'}%</span> of `,
         d.target.name,
-        '</div>',
+        "</div>",
       ].join('');
     }
 
