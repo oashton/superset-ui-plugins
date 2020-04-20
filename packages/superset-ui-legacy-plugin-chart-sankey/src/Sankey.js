@@ -53,12 +53,13 @@ function Sankey(element, props) {
   };
   const innerWidth = width - margin.left - margin.right;
   const innerHeight = height - margin.top - margin.bottom;
-
+  const heightTooltipDiv = 10;
+  
   div.selectAll('*').remove();
   const svg = div
     .append('svg')
     .attr('width', innerWidth + margin.left + margin.right)
-    .attr('height', innerHeight + margin.top + margin.bottom)
+    .attr('height', innerHeight + margin.top + margin.bottom - heightTooltipDiv )
     .append('g')
     .attr('transform', `translate(${margin.left},${margin.top})`);
 
@@ -72,7 +73,7 @@ function Sankey(element, props) {
   const sankey = d3Sankey()
     .nodeWidth(15)
     .nodePadding(10)
-    .size([innerWidth, innerHeight]);
+    .size([innerWidth, innerHeight - heightTooltipDiv ]);
 
   const path = sankey.link();
 
