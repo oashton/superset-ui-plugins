@@ -31,6 +31,7 @@ export default function transformProps(chartProps) {
     tableFilter,
     tableTimestampFormat,
     timeseriesLimitMetric,
+    allColumnsFilterEvent,
   } = formData;
   const { columnFormats, verboseMap } = datasource;
   const { records, columns } = queryData.data;
@@ -70,5 +71,6 @@ export default function transformProps(chartProps) {
     tableFilter,
     tableTimestampFormat,
     timeseriesLimitMetric,
+    allColumnsFilterEvent,
   };
 }

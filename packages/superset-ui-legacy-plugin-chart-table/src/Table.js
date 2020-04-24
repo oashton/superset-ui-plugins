@@ -58,6 +58,7 @@ const propTypes = {
   tableFilter: PropTypes.bool,
   tableTimestampFormat: PropTypes.string,
   timeseriesLimitMetric: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  allColumnsFilterEvent: PropTypes.arrayOf(PropTypes.string),
 };
 
 const formatValue = getNumberFormatter(NumberFormats.INTEGER);
@@ -82,6 +83,7 @@ function TableVis(element, props) {
     tableFilter,
     tableTimestampFormat,
     timeseriesLimitMetric,
+    allColumnsFilterEvent,
   } = props;
 
   const $container = $(element);
@@ -215,7 +217,7 @@ function TableVis(element, props) {
     // Check if the dashboard currently has a filter for each row
     .classed('filtered', d => filters && filters[d.col] && filters[d.col].includes(d.val))
     .on('click', function(d) {
-      if (!d.isMetric && tableFilter) {
+      if (!d.isMetric && tableFilter && allColumnsFilterEvent.includes(d.col) ) {
         const td = d3.select(this);
         if (td.classed('filtered')) {
           onRemoveFilter(d.col, [d.val]);
