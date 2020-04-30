@@ -33,23 +33,43 @@ const defaultProps = {
 };
 
 class Iframe extends React.PureComponent {
+
+  componentDidMount(){
+    if( this.areRecords ) {
+      document.getElementById("iframeForm").submit();
+    }
+  }
+
   render() {
-    const { className, url, width, height } = this.props;
-    const completeUrl = Mustache.render(url, {
+    const { className, url, width, height, extraFilters, data } = this.props;
+    let completeUrl = Mustache.render(url, {
       height,
       width,
     });
-
+    const jsonRecords = JSON.stringify( data.records );
+    const jsonExtraFilters = JSON.stringify( extraFilters );
+    const areRecords = typeof jsonRecords === 'undefined' ? false : true;
+    this.areRecords = areRecords;
     return (
-      <iframe
-        className={className}
-        title="superset-iframe"
-        src={completeUrl}
-        style={{
-          height,
-          width: '100%',
-        }}
-      />
+      <div>
+        <iframe
+          name="iframeChart"
+          className={className}
+          title="superset-iframe"
+          src={areRecords ? "": completeUrl}
+          style={{
+            height,
+            width: '100%',
+          }}
+        />
+        {areRecords && 
+          <form id="iframeForm" target="iframeChart" action={completeUrl} method="post">
+            <input type="hidden" name="csrf_token" value={document.getElementById("csrf_token").value} />
+            <input type="hidden" name="records" value={jsonRecords} />
+            <input type="hidden" name="filters" value={jsonExtraFilters} />
+          </form>
+        }
+      </div>
     );
   }
 }
