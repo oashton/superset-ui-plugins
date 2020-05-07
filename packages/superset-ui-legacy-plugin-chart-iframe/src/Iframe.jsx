@@ -26,6 +26,8 @@ const propTypes = {
   height: PropTypes.number.isRequired,
   url: PropTypes.string,
   width: PropTypes.number.isRequired,
+  extraFilters: PropTypes.string,
+  data: PropTypes.string,
 };
 const defaultProps = {
   className: '',
@@ -35,7 +37,13 @@ const defaultProps = {
 class Iframe extends React.PureComponent {
 
   componentDidMount(){
-    if( this.areRecords ) {
+    if (this.areRecords) {
+      document.getElementById("iframeForm").submit();
+    }
+  }
+  
+  componentDidUpdate(){
+    if (this.areRecords) {
       document.getElementById("iframeForm").submit();
     }
   }
