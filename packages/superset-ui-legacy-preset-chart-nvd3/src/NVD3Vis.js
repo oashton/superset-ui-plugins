@@ -68,8 +68,8 @@ import {
 import './NVD3Vis.css';
 
 const NO_DATA_RENDER_DATA = [
-  { text: 'No data', dy: '-.75em', class: 'header' },
-  { text: 'Adjust filters or check the Datasource.', dy: '.75em', class: 'body' },
+  { text: t('No data'), dy: '-.75em', class: 'header' },
+  { text: t('Adjust filters or check the Datasource.'), dy: '.75em', class: 'body' },
 ];
 
 // Override the noData render function to make a prettier UX

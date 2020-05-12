@@ -26,6 +26,7 @@ import { XYChart, AreaSeries, CrossHair, LinearGradient } from '@data-ui/xy-char
 import { BRAND_COLOR } from '@superset-ui/color';
 import { smartDateVerboseFormatter } from '@superset-ui/time-format';
 import { computeMaxFontSize } from '@superset-ui/dimension';
+import { t } from '@superset-ui/translation';
 
 import './BigNumber.css';
 
@@ -126,7 +127,7 @@ class BigNumberVis extends React.PureComponent {
 
   renderHeader(maxHeight) {
     const { bigNumber, formatBigNumber, width } = this.props;
-    const text = bigNumber === null ? 'No data' : formatBigNumber(bigNumber);
+    const text = bigNumber === null ? t('No data') : formatBigNumber(bigNumber);
 
     const container = this.createTemporaryContainer();
     document.body.append(container);
@@ -158,7 +159,7 @@ class BigNumberVis extends React.PureComponent {
 
     const text =
       bigNumber === null
-        ? 'Try applying different filters or ensuring your Datasource contains data'
+        ? t('Try applying different filters or ensuring your Datasource contains data')
         : subheader;
     if (text) {
       const container = this.createTemporaryContainer();
