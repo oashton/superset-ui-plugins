@@ -89,13 +89,15 @@ function TableVis(element, props) {
   const $container = $(element);
   $container.addClass('superset-legacy-chart-table');
 
-  const metrics = (rawMetrics || [])
-    .map(m => m.label || m)
-    // Add percent metrics
-    .concat((percentMetrics || []).map(m => `%${m}`))
-    // Removing metrics (aggregates) that are strings
-    .filter(m => typeof data[0][m] === 'number');
-
+  let metrics = []
+  if( data.length !== 0 ){
+    metrics = (rawMetrics || [])
+      .map(m => m.label || m)
+      // Add percent metrics
+      .concat((percentMetrics || []).map(m => `%${m}`))
+      // Removing metrics (aggregates) that are strings
+      .filter(m => typeof data[0][m] === 'number');
+  }
   function col(c) {
     const arr = [];
     data.forEach(row => {
@@ -245,6 +247,9 @@ function TableVis(element, props) {
     scrollY: `${height}px`,
     scrollCollapse: true,
     scrollX: true,
+    language: {
+      emptyTable: "No hay datos disponibles"
+    },
   });
 
   fixTableHeight($container.find('.dataTables_wrapper'), height);
