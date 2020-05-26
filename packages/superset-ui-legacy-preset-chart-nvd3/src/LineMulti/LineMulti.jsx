@@ -127,19 +127,33 @@ class LineMulti extends React.Component {
       queryDataCopy.data = [].concat(...data);
 
       // add null values at the edges to fix multiChart bug when series with
-      // different x values use different y axes
+      // different x values use different y axess 
       if (lineCharts.length > 0 && lineCharts2.length > 0) {
-        let minX = Infinity;
-        let maxX = -Infinity;
-        queryDataCopy.data.forEach(datum => {
-          minX = Math.min(minX, ...datum.values.map(v => v.x));
-          maxX = Math.max(maxX, ...datum.values.map(v => v.x));
-        });
-        // add null values at the edges
-        queryDataCopy.data.forEach(datum => {
-          datum.values.push({ x: minX, y: null });
-          datum.values.push({ x: maxX, y: null });
-        });
+        let sameXvaluesXLength = true;
+        if (queryDataCopy.data[0].values.length == queryDataCopy.data[1].values.length) {
+          for (let i in queryDataCopy.data[0].values) {
+            if (queryDataCopy.data[0].values[i].x != queryDataCopy.data[1].values[i].x ){
+              sameXvaluesXLength = false;
+              break;
+            }
+          }
+        }
+        else {
+          sameXvaluesXLength = false;
+        }
+        if (!sameXvaluesXLength) {
+          let minX = Infinity;
+          let maxX = -Infinity;
+          queryDataCopy.data.forEach(datum => {
+            minX = Math.min(minX, ...datum.values.map(v => v.x));
+            maxX = Math.max(maxX, ...datum.values.map(v => v.x));
+          });
+          // add null values at the edges
+          queryDataCopy.data.forEach(datum => {
+            datum.values.push({ x: minX, y: null });
+            datum.values.push({ x: maxX, y: null });
+          });
+        }
       }
 
       this.setState({ queryData: queryDataCopy });
