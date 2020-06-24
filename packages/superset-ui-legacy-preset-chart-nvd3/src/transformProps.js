@@ -137,7 +137,7 @@ export default function transformProps(chartProps) {
     showLegend,
     showMarkers,
     sizeField: size,
-    sizeFormat: metric_size[0].d3format,
+    sizeFormat: metric_size[0] !== undefined ? metric_size[0].d3format: undefined,
     useRichTooltip: richTooltip,
     vizType,
     xAxisFormat,
