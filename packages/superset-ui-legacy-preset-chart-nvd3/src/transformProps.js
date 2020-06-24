@@ -97,6 +97,10 @@ export default function transformProps(chartProps) {
     yAxisFormat = yAxisFormat || grabD3Format(chartProps, chartProps.formData.metrics[0]);
   }
 
+  var metric_size = datasource.metrics.filter(metric => {
+    return metric.metric_name === size
+  })
+
   return {
     width,
     height,
@@ -133,6 +137,7 @@ export default function transformProps(chartProps) {
     showLegend,
     showMarkers,
     sizeField: size,
+    sizeFormat: metric_size[0].d3format,
     useRichTooltip: richTooltip,
     vizType,
     xAxisFormat,
