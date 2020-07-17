@@ -47,6 +47,7 @@ export default function transformProps(chartProps) {
     contribution,
     donut,
     entity,
+    groupby,
     labelsOutside,
     leftMargin,
     lineInterpolation,
@@ -56,6 +57,7 @@ export default function transformProps(chartProps) {
     reduceXTicks,
     richTooltip,
     sendTimeRange,
+    series,
     showBarValue,
     showBrush,
     showControls,
@@ -105,6 +107,8 @@ export default function transformProps(chartProps) {
     width,
     height,
     data,
+    groupby,
+    series,
     annotationData,
     annotationLayers,
     areaStackedStyle: stackedStyle,
@@ -121,6 +125,7 @@ export default function transformProps(chartProps) {
     lineInterpolation,
     maxBubbleSize: parseInt(maxBubbleSize, 10),
     numberFormat,
+    onAddFilter,
     onBrushEnd: isTruthy(sendTimeRange)
       ? timeRange => {
           onAddFilter('__time_range', timeRange, false, true);

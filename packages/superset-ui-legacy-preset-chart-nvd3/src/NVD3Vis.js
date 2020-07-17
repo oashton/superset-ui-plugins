@@ -160,6 +160,8 @@ const propTypes = {
     // bullet
     bulletDataType,
   ]),
+  groupby: PropTypes.arrayOf(PropTypes.string),
+  series: PropTypes.string,
   width: PropTypes.number,
   height: PropTypes.number,
   annotationData: PropTypes.object,
@@ -239,6 +241,8 @@ const formatter = getNumberFormatter();
 function nvd3Vis(element, props) {
   const {
     data,
+    groupby,
+    series,
     width: maxWidth,
     height: maxHeight,
     annotationData,
@@ -1154,7 +1158,52 @@ function nvd3Vis(element, props) {
     hideTooltips(true);
   }
 
-  nv.addGraph(drawGraph);
+  nv.addGraph(drawGraph
+    , function() {
+      // for pie chart .nv-pie
+      switch (vizType) {
+        case 'pie':
+          d3.selectAll('.nv-pieChart .nv-legend-symbol').on('click', function(el) {
+            const selectedElem = this;
+            let filter_selections = [];
+            if ( groupby.length == 1 ) {
+              const filter_name = groupby[0];
+              filter_selections.push(this.__data__.x);
+              applyFilter(d3.select(this), filter_name, filter_selections);
+            }
+          });
+          break;
+        case 'line':
+          d3.selectAll('.line .nv-legend-symbol').on('click', function(el) {
+            let filter_selections = [];
+            if ( groupby.length == 1 ) {
+              const filter_name = groupby[0];
+              filter_selections.push(this.__data__.key);
+              applyFilter(d3.select(this), filter_name, filter_selections);
+            }
+            
+          });
+          break;
+        case 'bubble':
+          d3.selectAll('.bubble .nv-legend-symbol').on('click', function(el) {
+            const selectedElem = this;
+            let filter_selections = [];
+            const filter_name = series;
+            filter_selections.push(this.__data__.key);
+            applyFilter(d3.select(this), filter_name, filter_selections);
+          });
+          break;
+       }
+    }
+  );
+
+  function applyFilter(selection, filter_name, filter_selections) {
+    const newSelectedValues = {
+      [filter_name]: filter_selections,
+      //[filter_name]: ['1970-01-01 00:00:00.000000','1980-01-01 00:00:00.000000','1990-01-01 00:00:00.000000'],
+    };
+    props.onAddFilter(newSelectedValues);
+  }
 }
 
 nvd3Vis.displayName = 'NVD3';
