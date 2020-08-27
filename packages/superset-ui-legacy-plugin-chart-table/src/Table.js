@@ -23,7 +23,7 @@ import d3 from 'd3';
 import PropTypes from 'prop-types';
 import dt from 'datatables.net-bs/js/dataTables.bootstrap';
 import dompurify from 'dompurify';
-import { getNumberFormatter, NumberFormats } from '@superset-ui/number-format';
+import { getNumberFormatter, NumberFormats, createD3NumberFormatter } from '@superset-ui/number-format';
 import { getTimeFormatter } from '@superset-ui/time-format';
 import fixTableHeight from './utils/fixTableHeight';
 import 'datatables.net-bs/css/dataTables.bootstrap.css';
@@ -61,7 +61,15 @@ const propTypes = {
   allColumnsFilterEvent: PropTypes.arrayOf(PropTypes.string),
 };
 
-const formatValue = getNumberFormatter(NumberFormats.INTEGER);
+const formatValue = createD3NumberFormatter({
+  formatString: ',.2f',
+  locale: {
+    decimal: ',',
+    thousands: '.',
+    grouping: [3],
+    currency: ['$', '']
+  }
+});
 const formatPercent = getNumberFormatter(NumberFormats.PERCENT_3_POINT);
 const NOOP = () => {};
 
@@ -162,6 +170,10 @@ function TableVis(element, props) {
         }
         if (key[0] === '%') {
           html = formatPercent(val);
+        }
+
+        if (typeof val === 'number') {
+          html = formatValue(val);
         }
 
         return {
