@@ -156,7 +156,7 @@ export function generateAreaChartTooltipContent(d, timeFormatter, valueFormatter
       `<td style="color: ${series.color}">${series.key === 'TOTAL' ? '' : '&#9724;'}</td>` +
       `<td>${key}</td>` +
       `<td>${valueFormatter(series.value)}</td>` +
-      `<td>${((100 * series.value) / total).toFixed(2)}%</td>` +
+      `<td>${valueFormatter(((100 * series.value) / total).toFixed(2))}%</td>` +
       '</tr>';
   });
   tooltip += '</tbody></table>';
