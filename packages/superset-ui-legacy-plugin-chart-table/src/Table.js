@@ -94,9 +94,10 @@ function TableVis(element, props) {
     allColumnsFilterEvent,
   } = props;
 
+  const THOUSAND_LIMIT = 999;
   const $container = $(element);
   $container.addClass('superset-legacy-chart-table');
-
+  
   let metrics = []
   if( data.length !== 0 ){
     metrics = (rawMetrics || [])
@@ -172,8 +173,10 @@ function TableVis(element, props) {
           html = formatPercent(val);
         }
 
-        if (typeof val === 'number') {
-          html = formatValue(val);
+        if (typeof val === 'number' && !isMetric) {
+          if (val % 1 !== 0 || val > THOUSAND_LIMIT) {
+            html = formatValue(val);
+          }
         }
 
         return {
