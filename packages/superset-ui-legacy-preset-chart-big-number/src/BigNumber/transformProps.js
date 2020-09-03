@@ -35,6 +35,7 @@ export default function transformProps(chartProps) {
     startYAxisAtZero,
     subheader = '',
     vizType,
+    textColor,
   } = formData;
   let { yAxisFormat } = formData;
   const { data } = queryData;
@@ -108,5 +109,6 @@ export default function transformProps(chartProps) {
     startYAxisAtZero,
     subheader: formattedSubheader,
     trendLineData,
+    textColor,
   };
 }

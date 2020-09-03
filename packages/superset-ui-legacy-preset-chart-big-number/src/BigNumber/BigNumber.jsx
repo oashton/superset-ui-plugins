@@ -126,7 +126,7 @@ class BigNumberVis extends React.PureComponent {
   }
 
   renderHeader(maxHeight) {
-    const { bigNumber, formatBigNumber, width } = this.props;
+    const { bigNumber, formatBigNumber, width, textColor } = this.props;
     const text = bigNumber === null ? t('No data') : formatBigNumber(bigNumber);
 
     const container = this.createTemporaryContainer();
@@ -146,6 +146,7 @@ class BigNumberVis extends React.PureComponent {
         style={{
           fontSize,
           height: maxHeight,
+          color: textColor ? textColor : 'black'
         }}
       >
         <span>{text}</span>
